@@ -28,7 +28,7 @@ class MoveGroupPythonIntefaceTutorial(object):
         move_group = self.move_group
         pose_goal = geometry_msgs.msg.Pose()
 
-        pose_goal.position.x = 0.2
+        pose_goal.position.x = 0.5
         pose_goal.position.y = 0
         pose_goal.position.z = 0.2 #static
 
