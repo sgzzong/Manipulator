@@ -49,8 +49,8 @@ class MoveGroupPythonIntefaceTutorial(object):
         move_group.go(joint_goal, wait=True)
         print("arrived home")
         move_group.stop()
-        current_pose = self.move_group.get_current_pose().pose
-        print(current_pose)
+        # current_pose = self.move_group.get_current_pose().pose
+        # print(current_pose)
 
     def go_to_pose_goal(self,x,y):
         move_group = self.move_group
@@ -72,13 +72,17 @@ def main():
     tutorial = MoveGroupPythonIntefaceTutorial()
     tutorial.go_home()
     while(True):
+      print("===============================================================")
       x = raw_input("g : 포인트로 이동      h : 홈 위치로 이동         e : 종료 \n")
       if x == 'g':
         a, b = map(eval, raw_input('X, Y좌표를 입력하세요. : ').split())
+        print("(%.2f,%.2f,0.4) 좌표로 이동합니다."%(a,b))
         tutorial.go_to_pose_goal(a, b)
       if x == 'h':
+        print("home 위치로 돌아갑니다.")
         tutorial.go_home()
       if x == 'e':
+        print("종료되었습니다.")
         break
       else:
         print("please press the correct key")
