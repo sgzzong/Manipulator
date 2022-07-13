@@ -1,1 +1,3 @@
 ETRI Manipulator control source code
+
+ur_hardware_interface.cpp 에러시 사용
