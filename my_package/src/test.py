@@ -260,15 +260,22 @@ class MoveGroupPythonInterfaceTutorial(object):
         waypoints = []
 
         wpose = move_group.get_current_pose().pose
-        wpose.position.z -= scale * 0.1  # First move up (z)
-        wpose.position.y += scale * 0.2  # and sideways (y)
+        wpose.position.x = 0.4
+        wpose.position.z = 0.2  # First move up (z)
+        wpose.position.y = 0.2  # and sideways (y)
+        print("move")
         waypoints.append(copy.deepcopy(wpose))
+        # wpose.position.z -= scale * 0.1  # First move up (z)
+        # wpose.position.y += scale * 0.2  # and sideways (y)
+        # print("move")
+        # waypoints.append(copy.deepcopy(wpose))
 
-        wpose.position.x += scale * 0.1  # Second move forward/backwards in (x)
-        waypoints.append(copy.deepcopy(wpose))
+        # wpose.position.x += scale * 0.1  # Second move forward/backwards in (x)
+        # waypoints.append(copy.deepcopy(wpose))
 
-        wpose.position.y -= scale * 0.1  # Third move sideways (y)
-        waypoints.append(copy.deepcopy(wpose))
+        # wpose.position.y -= scale * 0.1  # Third move sideways (y)
+        # print("move")
+        # waypoints.append(copy.deepcopy(wpose))
 
         # We want the Cartesian path to be interpolated at a resolution of 1 cm
         # which is why we will specify 0.01 as the eef_step in Cartesian
@@ -366,6 +373,7 @@ class MoveGroupPythonInterfaceTutorial(object):
             # Sleep so that we give other threads time on the processor
             rospy.sleep(0.1)
             seconds = rospy.get_time()
+        return
 
         # If we exited the while loop without returning then we timed out
         return False
@@ -453,9 +461,7 @@ class MoveGroupPythonInterfaceTutorial(object):
         # reason not to.
         box_name = self.box_name
         scene = self.scene
-
-        ## BEGIN_SUB_TUTORIAL remove_object
-        ##
+        return
         ## Removing Objects from the Planning Scene
         ## ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         ## We can remove the box from the world.

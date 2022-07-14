@@ -23,12 +23,9 @@ class MoveGroupPythonIntefaceTutorial(object):
         display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
                                                     moveit_msgs.msg.DisplayTrajectory,
                                                     queue_size=20)                                                      
-        # Misc variables
-        self.box_name = ""
-        self.robot = robot
-        self.scene = scene
+        group_names = robot.get_group_names()
         self.move_group = move_group
-        self.display_trajectory_publisher = display_trajectory_publisher
+
     def go_to_joint_state(self):
         move_group = self.move_group
         joint_goal = move_group.get_current_joint_values()
@@ -42,7 +39,6 @@ class MoveGroupPythonIntefaceTutorial(object):
         move_group.stop()
 
     def go_home(self):
-        global orient
         move_group = self.move_group
         joint_goal = move_group.get_current_joint_values()
         joint_goal[0] = 0
@@ -55,6 +51,7 @@ class MoveGroupPythonIntefaceTutorial(object):
         move_group.stop()
         current_pose = self.move_group.get_current_pose().pose
         orient = [current_pose.orientation.x, current_pose.orientation.y, current_pose.orientation.z, current_pose.orientation.w]
+
     def go_to_pose_goal(self,x,y,z):
         global orient
         move_group = self.move_group
@@ -72,44 +69,9 @@ class MoveGroupPythonIntefaceTutorial(object):
         plan = move_group.go(wait=True)
         move_group.stop()
         move_group.clear_pose_targets()
-    def plan_cartesian_path(self,x,y,z,scale=1):
-        global orient
-        move_group = self.move_group
-        waypoints = []
-
-        wpose = move_group.get_current_pose().pose
-        wpose.position.x = x
-        wpose.position.y = y
-        wpose.position.z = z  
-        wpose.orientation.x = orient[0]
-        wpose.orientation.y = orient[1]
-        wpose.orientation.z = orient[2]
-        wpose.orientation.w = orient[3]
-        print("move")
-        waypoints.append(copy.deepcopy(wpose))
-        (plan, fraction) = move_group.compute_cartesian_path(
-            waypoints, 0.05, 0.0 
-        )
-        move_group.execute(plan, wait=True)
-        # return plan, fraction
-
-    def display_trajectory(self, plan):
-        robot = self.robot
-        display_trajectory_publisher = self.display_trajectory_publisher
-        display_trajectory = moveit_msgs.msg.DisplayTrajectory()
-        display_trajectory.trajectory_start = robot.get_current_state()
-        display_trajectory.trajectory.append(plan)
-        display_trajectory_publisher.publish(display_trajectory)
-    def execute_plan(self, plan):
-        move_group = self.move_group
-        move_group.execute(plan, wait=True)
 def main():
     tutorial = MoveGroupPythonIntefaceTutorial()
     tutorial.go_home()
-    # tutorial.display_trajectory(cartesian_plan)
-    # rospy.sleep(1)
-    # tutorial.execute_plan(cartesian_plan)
-    # rospy.sleep(1)
     while(True):
       print("===========================================")
       x = raw_input("g : Move!  h : Reset!  a : Auto!  e: Exit\n")
@@ -120,16 +82,9 @@ def main():
       if x == 'h':
         print("arrived home")
         tutorial.go_home()
-      if x == 'b':
-        path = [[0.4,-0.2,0.3],[0.4,0.2,0.3],[0.2,0.2,0.3],[0.2,-0.2,0.3],
-        [0.4,-0.2,0.2],[0.4,0.2,0.2],[0.2,0.2,0.2],[0.2,-0.2,0.2]]
-        for i in range(8):
-            tutorial.plan_cartesian_path(path[i][0],path[i][1],path[i][2])
-            rospy.sleep(1)
       if x == 'a':
         path = [[0.4,-0.2,0.3],[0.4,0.2,0.3],[0.2,0.2,0.3],[0.2,-0.2,0.3],
         [0.4,-0.2,0.2],[0.4,0.2,0.2],[0.2,0.2,0.2],[0.2,-0.2,0.2]]
-
         for i in range(8):
             tutorial.go_to_pose_goal(path[i][0],path[i][1],path[i][2])
             rospy.sleep(1)
