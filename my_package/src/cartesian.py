@@ -29,18 +29,7 @@ class MoveGroupPythonIntefaceTutorial(object):
         self.scene = scene
         self.move_group = move_group
         self.display_trajectory_publisher = display_trajectory_publisher
-    def go_to_joint_state(self):
-        move_group = self.move_group
-        joint_goal = move_group.get_current_joint_values()
-        joint_goal[0] = pi/4
-        joint_goal[1] = -pi/4
-        joint_goal[2] = 0
-        joint_goal[3] = 0
-        joint_goal[4] = 0
-        joint_goal[5] = 0
-        move_group.go(joint_goal, wait=True)
-        move_group.stop()
-
+        
     def go_home(self):
         global orient
         move_group = self.move_group
@@ -49,7 +38,15 @@ class MoveGroupPythonIntefaceTutorial(object):
         joint_goal[1] = -pi/2
         joint_goal[2] = pi/2
         joint_goal[3] = -pi/2
-        joint_goal[4] = -pi/2
+        joint_goal[4] = -pi/2        joint_goal[1] = -pi/4
+        joint_goal[2] = 0
+        joint_goal[3] = 0
+        joint_goal[4] = 0
+        joint_goal[5] = 0
+        move_group.go(joint_goal, wait=True)
+        move_group.stop()
+
+    def go_home(self):
         joint_goal[5] = 0
         move_group.go(joint_goal, wait=True)
         move_group.stop()
@@ -91,25 +88,9 @@ class MoveGroupPythonIntefaceTutorial(object):
             waypoints, 0.05, 0.0 
         )
         move_group.execute(plan, wait=True)
-        # return plan, fraction
-
-    def display_trajectory(self, plan):
-        robot = self.robot
-        display_trajectory_publisher = self.display_trajectory_publisher
-        display_trajectory = moveit_msgs.msg.DisplayTrajectory()
-        display_trajectory.trajectory_start = robot.get_current_state()
-        display_trajectory.trajectory.append(plan)
-        display_trajectory_publisher.publish(display_trajectory)
-    def execute_plan(self, plan):
-        move_group = self.move_group
-        move_group.execute(plan, wait=True)
 def main():
     tutorial = MoveGroupPythonIntefaceTutorial()
     tutorial.go_home()
-    # tutorial.display_trajectory(cartesian_plan)
-    # rospy.sleep(1)
-    # tutorial.execute_plan(cartesian_plan)
-    # rospy.sleep(1)
     while(True):
       print("===========================================")
       x = raw_input("g : Move!  h : Reset!  a : Auto!  e: Exit\n")
@@ -120,19 +101,11 @@ def main():
       if x == 'h':
         print("arrived home")
         tutorial.go_home()
-      if x == 'b':
-        rospy.sleep(10)
+      if x == 'a':
         path = [[0.4,-0.2,0.3],[0.4,0.2,0.3],[0.2,0.2,0.3],[0.2,-0.2,0.3],
         [0.4,-0.2,0.2],[0.4,0.2,0.2],[0.2,0.2,0.2],[0.2,-0.2,0.2]]
         for i in range(8):
             tutorial.plan_cartesian_path(path[i][0],path[i][1],path[i][2])
-            rospy.sleep(1)
-      if x == 'a':
-        path = [[0.4,-0.2,0.3],[0.4,0.2,0.3],[0.2,0.2,0.3],[0.2,-0.2,0.3],
-        [0.4,-0.2,0.2],[0.4,0.2,0.2],[0.2,0.2,0.2],[0.2,-0.2,0.2]]
-
-        for i in range(8):
-            tutorial.go_to_pose_goal(path[i][0],path[i][1],path[i][2])
             rospy.sleep(1)
       if x == 'e':
         print("Exit")
