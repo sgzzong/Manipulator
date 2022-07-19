@@ -29,7 +29,7 @@ class MoveGroupPythonIntefaceTutorial(object):
         self.scene = scene
         self.move_group = move_group
         self.display_trajectory_publisher = display_trajectory_publisher
-        
+
     def go_home(self):
         global orient
         move_group = self.move_group
@@ -85,9 +85,10 @@ class MoveGroupPythonIntefaceTutorial(object):
         print("move")
         waypoints.append(copy.deepcopy(wpose))
         (plan, fraction) = move_group.compute_cartesian_path(
-            waypoints, 0.05, 0.0 
+            waypoints, 0.01, 0.0 
         )
         move_group.execute(plan, wait=True)
+        move_group.stop()
 def main():
     tutorial = MoveGroupPythonIntefaceTutorial()
     tutorial.go_home()
@@ -102,8 +103,8 @@ def main():
         print("arrived home")
         tutorial.go_home()
       if x == 'a':
-        path = [[0.4,-0.2,0.3],[0.4,0.2,0.3],[0.2,0.2,0.3],[0.2,-0.2,0.3],
-        [0.4,-0.2,0.2],[0.4,0.2,0.2],[0.2,0.2,0.2],[0.2,-0.2,0.2]]
+        path = [[0.4,0.2,0.3],[0.25,0.2,0.3],[0.25,-0.2,0.3],
+        [0.4,-0.2,0.2],[0.4,0.2,0.2],[0.25,0.2,0.2],[0.25,-0.2,0.2],[0.4,-0.2,0.3]]
         for i in range(8):
             tutorial.plan_cartesian_path(path[i][0],path[i][1],path[i][2])
             rospy.sleep(1)
