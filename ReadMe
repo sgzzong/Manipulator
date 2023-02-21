@@ -1,3 +1,20 @@
 ETRI Manipulator control source code
 
 ur_hardware_interface.cpp 에러시 사용
+
+ned2 information
+Ubuntu 18.04.5, ROS melodic 기반
+port 22, id : niryo, pw : robotics
+
+ned2 ROS document
+https://docs.niryo.com/dev/ros/v4.1.1/en/index.html
+
+ned2 ROS msg 
+https://docs.niryo.com/dev/ros/v4.1.1/en/source/stack/high_level.html
+
+ned2 simulation : https://docs.niryo.com/dev/ros/v4.1.1/en/source/simulation.html
+roslaunch niryo_robot_bringup niryo_ned2_simulation.launch
+roslaunch niryo_robot_description display.launch
+
+roslaunch niryo_robot_bringup desktop_rviz_simulation.launch
+roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch
