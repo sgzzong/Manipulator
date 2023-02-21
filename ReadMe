@@ -20,3 +20,6 @@ roslaunch niryo_robot_description display.launch
 
 roslaunch niryo_robot_bringup desktop_rviz_simulation.launch
 roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch
+
+설치 youtube : https://www.youtube.com/watch?v=Vu9hOwcL_GQ
+https://docs.niryo.com/dev/ros/v4.1.1/en/source/simulation.html#launch-gazebo-simulation
