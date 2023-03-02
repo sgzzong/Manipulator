@@ -23,3 +23,6 @@ roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch
 
 설치 youtube : https://www.youtube.com/watch?v=Vu9hOwcL_GQ
 https://docs.niryo.com/dev/ros/v4.1.1/en/source/simulation.html#launch-gazebo-simulation
+
+Moveit 비동기, 동기 작업 관련 내용 Interlude: Synchronous vs Asynchronous updates
+http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/planning_scene_ros_api/planning_scene_ros_api_tutorial.html
